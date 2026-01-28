@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asia-Pacific SDG Progress Report 2026 Q&A</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-container {
+            padding: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-message {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .welcome-message h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .question-option {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .question-option:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .question-option:hover .question-number {
+            background: white;
+            color: #667eea;
+        }
+
+        .question-text {
+            flex: 1;
+        }
+
+        .answer-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4caf50;
+            margin-bottom: 20px;
+        }
+
+        .answer-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .answer-text {
+            color: #1b5e20;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .source {
+            color: #558b2f;
+            font-weight: bold;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #667eea, transparent);
+            margin: 20px 0;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌏 Asia-Pacific SDG Progress Report 2026</h1>
+            <p>Interactive Q&A Chatbot</p>
+            <script src="//code.tidio.co/avlxlyw8bnjk0x5jmlfsf4z8671hguuk.js"></script>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome-message">
+                <h3>Welcome! Please select one of the following questions:</h3>
+            </div>
+            <div id="questionsContainer"></div>
+        </div>
+        
+        <div class="footer">
+            Asia-Pacific SDG Progress Report 2026 | Select a question to learn more
+        </div>
+    </div>
+
+    <script>
+        // Complete Q&A data from the CSV
+        const qaData = [
+            {
+                chapter: "Chapter 1.1 Overview of regional progress",
+                question: "What is the overall progress on SDGs in Asia-Pacific?",
+                answer: "The data present a clear and alarming verdict: the region is not on track to achieve any of the 17 SDGs. At the current pace, 88 per cent of measurable targets will be missed."
+            },
+            {
+                chapter: "Chapter 1.1 Overview of regional progress",
+                question: "Which goals are progressing well?",
+                answer: "The region continues to make notable progress towards SDG 9 (Industry, innovation and infrastructure), which has no targets in decline, and SDG 3 (Good health and well-being), bolstered by steady reductions in maternal and child mortality."
+            },
+            {
+                chapter: "Chapter 1.1 Overview of regional progress",
+                question: "Which goals are progressing too slowly?",
+                answer: "Progress on SDG 13 (Climate action) remains a grave concern as the level of total greenhouse gas emissions in the region continues to increase. SDG 14 (Life below water) faces significant setbacks in sustainable fishing and coastal conservation. Similarly, progress towards SDG 15 (Life on land) is hampered by accelerating biodiversity loss and land degradation."
+            },
+            {
+                chapter: "Chapter 1.1 Overview of regional progress",
+                question: "How many targets are on track to be achieved in 2030?",
+                answer: "On the current trajectory, the region will miss 103 of the 117 measurable targets. Existing data show that the region is on track to achieve only 14 targets by 2030, with seven SDGs having no targets on track."
+            },
+            {
+                chapter: "Chapter 1.1 Overview of regional progress",
+                question: "What are the key challenges facing the region?",
+                answer: "The current development trajectory in the Asia-Pacific region is unsustainable. In critical areas such as climate action, marine conservation and biodiversity, the situation has not just stalled – it is deteriorating. This environmental backsliding, coupled with slow progress in creating decent work and reducing inequality, paints a picture of deeply unbalanced development."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What is the status of SDG 1?",
+                answer: "Progress in reducing income poverty is a key achievement for the region. However, these gains are increasingly at risk due to setbacks in limiting the human and economic toll of natural disasters."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What about hunger and food security?",
+                answer: "The region is making slow progress in combating malnutrition, although it has been faster in reducing undernourishment and good progress is being made on long-term food security."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "Tell me about Goal 3 progress.",
+                answer: "The region continues to show strong progress in health and well-being, with sustained reductions in maternal, neonatal and under-5 mortality. Adolescent birth rates are declining and ODA for medical research and basic health sectors has substantially increased over the past decade."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "Tell me about education progress.",
+                answer: "The region has maintained steady progress on foundational education, with consistent school completion rates, growing pre-primary enrolment and improved access to basic services. However, a critical gap remains – learning outcomes continue to fall short, with regression in achieving minimum proficiency in reading and mathematics."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "How is gender equality progressing?",
+                answer: "Progress towards gender equality in the region remains difficult to assess due to significant data gaps. Where data are available, indicators on women's representation in managerial positions and political positions show slow improvement."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What is the status of SDG 6?",
+                answer: "The region continues to make slow but steady progress in expanding access to essential water and sanitation services, including safely managed drinking water and reductions in open defecation. However, these infrastructural gains are being severely undermined by a continued deterioration in the extent of permanent water bodies, an indicator of the health of freshwater ecosystems."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "Tell me about clean energy progress.",
+                answer: "The region continues to make strong progress in expanding access to electricity and is set to reach the 2030 target ahead of schedule. However, the crucial transition to renewable energy has stalled."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What about decent work and economic growth?",
+                answer: "The region has continued to experience economic growth. However, the current growth model remains environmentally unsustainable. At the same time, progress on reducing informal employment and advancing youth employment strategies remains limited, underscoring the ongoing challenge of ensuring that economic gains translate into decent work for all."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "Tell me about Goal 9 progress.",
+                answer: "The region continues to demonstrate strong performance in industry, innovation and infrastructure, supported by near-universal mobile network coverage. Progress in manufacturing value added has been slow and is not fully balanced, as progress in manufacturing employment has begun to regress."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What is the status of Goal 10: reduced inequalities?",
+                answer: "Progress in reducing inequalities remains slow and insufficient. Key indicators of income distribution, such as the Gini index and the share of the population living on less than half the median income, show little improvement."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "How are cities and communities developing?",
+                answer: "The region continues to make progress in developing national strategies for disaster risk reduction and improving urban air quality. However, cities and communities remain highly vulnerable, as indicators measuring the human and economic toll from disasters show a worrying decline."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What is the status of SDG 12?",
+                answer: "The region continues to make slow progress in areas such as corporate sustainability reporting, hazardous waste disposal and electronic waste recycling. The fundamental shift towards sustainable production and consumption remains a significant challenge."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What is the status of climate action?",
+                answer: "The region failed in implementing meaningful climate action. Greenhouse gas emissions continue to rise, and the human impact of climate-related disasters remains severe."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "What is the status of ocean conservation?",
+                answer: "The health of the region's marine ecosystems is in serious decline. The economic contribution of sustainable fisheries continues to decline, reflecting mounting pressure on marine resources."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "How is SDG 15 progressing?",
+                answer: "The region's terrestrial biodiversity remains under severe threat. The Red List Index, a critical indicator of species extinction risk, continues to show a downward trend. This decline is compounded by setbacks in addressing land degradation."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "Are we on track to achieve Goal 16?",
+                answer: "Progress towards peaceful and inclusive societies remains difficult to assess due to persistent data gaps for critical indicators, including corruption and trafficking in persons. Among the available metrics, the region shows only slow progress in areas such as government efficiency and the representation of women and youth in parliament."
+            },
+            {
+                chapter: "Chapter 1.2 SDG profiles",
+                question: "Tell me about partnerships for the goals",
+                answer: "The region's progress on building partnerships essential for achieving the SDGs remains uneven. While indicators measuring digital connectivity and international trade show strength, systemic challenges continue to undermine efforts. Progress is regressing on reducing debt service burdens, diverting crucial resources away from sustainable development."
+            },
+            {
+                chapter: "Chapter 2.1 Data availability in the Asia-Pacific region",
+                question: "What is the data availability situation?",
+                answer: "Data availability shows an upward trend, with an average of 55 per cent of indicators having at least two data points in 2025. However, significant gaps persist, as a substantial share of indicators still lack sufficient data."
+            },
+            {
+                chapter: "Chapter 2.1 Data availability in the Asia-Pacific region",
+                question: "What are the key factors that drove improvements in data availability?",
+                answer: "Countries and territories have improved SDG data availability through stronger coordination within national statistical systems and through improved collaboration with international agencies."
+            },
+            {
+                chapter: "Chapter 2.1 Data availability in the Asia-Pacific region",
+                question: "What else can be done to improve data availability?",
+                answer: "Achieving the data transformation needed for the 2030 Agenda demands sustained political and financial investment, coupled with robust coordination and partnerships across the region."
+            },
+            {
+                chapter: "Chapter 2.1 Data availability in the Asia-Pacific region",
+                question: "Which Goals have the largest data gaps?",
+                answer: "Large data gaps remain for SDG 5 (Gender equality) and SDG 16 (Peace, justice and strong institutions), while SDG 14 (Life below water), SDG 13 (Climate action) and SDG 11 (Sustainable cities and communities) also show lower data availability compared to other Goals."
+            },
+            {
+                chapter: "Chapter 2.1 Data availability in the Asia-Pacific region",
+                question: "Which is the status on disaggregated data?",
+                answer: "Granular data is most common by age, sex and migratory status. Among the 38 indicators that can be disaggregated by age, economies in the region have, on average, two or more data points for 33% of them, which is higher than for any other dimension. Data by sex is available for the largest number of indicators (57), though only 27% have sufficient data."
+            }
+        ];
+
+        let availableQuestions = [...qaData];
+        let currentQuestions = [];
+        let firstQuestionAsked = false;
+
+        function getRandomQuestions(count) {
+            const shuffled = [...availableQuestions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function displayQuestions() {
+            currentQuestions = getRandomQuestions(3);
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-option';
+                questionDiv.innerHTML = `
+                    <div class="question-number">${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+                questionDiv.onclick = () => selectQuestion(index);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function selectQuestion(index) {
+            const selectedQ = currentQuestions[index];
+            
+            // Remove the selected question from available questions
+            availableQuestions = availableQuestions.filter(q => q.question !== selectedQ.question);
+
+            // Display the answer
+            const chatContainer = document.getElementById('chatContainer');
+            
+            // Clear current questions
+            document.getElementById('questionsContainer').innerHTML = '<div class="loading">Loading answer...</div>';
+
+            setTimeout(() => {
+                // Add question and answer to chat
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'message';
+                answerDiv.innerHTML = `
+                    <div class="answer-box" style="background: #e3f2fd; border-left-color: #1976d2; margin-bottom: 15px;">
+                        <h4 style="color: #1565c0;">Question:</h4>
+                        <div class="answer-text" style="color: #0d47a1;">${selectedQ.question}</div>
+                    </div>
+                    <div class="answer-box">
+                        <h4>Answer:</h4>
+                        <div class="answer-text">${selectedQ.answer}</div>
+                        <div class="source">Source: ${selectedQ.chapter}</div>
+                    </div>
+                `;
+                
+                // Insert before questions container
+                const questionsContainer = document.getElementById('questionsContainer');
+                chatContainer.insertBefore(answerDiv, questionsContainer);
+
+                // Add divider
+                const divider = document.createElement('div');
+                divider.className = 'divider';
+                chatContainer.insertBefore(divider, questionsContainer);
+
+                // Only add prompt on first question
+                if (!firstQuestionAsked) {
+                    firstQuestionAsked = true;
+                }
+
+                // Display new questions
+                if (availableQuestions.length >= 3) {
+                    displayQuestions();
+                } else if (availableQuestions.length > 0) {
+                    // If less than 3 questions remain, show all remaining
+                    currentQuestions = [...availableQuestions];
+                    const container = document.getElementById('questionsContainer');
+                    container.innerHTML = '';
+
+                    currentQuestions.forEach((q, idx) => {
+                        const questionDiv = document.createElement('div');
+                        questionDiv.className = 'question-option';
+                        questionDiv.innerHTML = `
+                            <div class="question-number">${idx + 1}</div>
+                            <div class="question-text">${q.question}</div>
+                        `;
+                        questionDiv.onclick = () => selectQuestion(idx);
+                        container.appendChild(questionDiv);
+                    });
+                } else {
+                    // No more questions
+                    document.getElementById('questionsContainer').innerHTML = `
+                        <div class="answer-box">
+                            <h4>All questions have been answered!</h4>
+                            <div class="answer-text">You've explored all available questions from the Asia-Pacific SDG Progress Report 2026. Thank you for your interest!</div>
+                        </div>
+                    `;
+                }
+
+                // Scroll to show the answer at the top
+                answerDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 500);
+        }
+
+        // Initialize with first 3 questions
+        displayQuestions();
+    </script>
+</body>
+</html>
